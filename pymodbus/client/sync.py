@@ -349,6 +349,8 @@ class ModbusSerialClient(BaseModbusClient):
         if not self.socket:
             raise ConnectionException(self.__str__())
         if request:
+            self.socket.flushInput()
+            _logger.warning("Flush input buffer")
             ts = time.time()
             if ts < self._last_frame_end + self._silent_interval:
                 _logger.debug("will sleep to wait for 3.5 char")
